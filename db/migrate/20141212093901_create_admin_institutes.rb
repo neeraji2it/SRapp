@@ -1,6 +1,7 @@
 class CreateAdminInstitutes < ActiveRecord::Migration
   def change
     create_table :admin_institutes do |t|
+      t.integer :admin_id
       t.attachment :logo
       t.string :full_name 
       t.string :address_line1
