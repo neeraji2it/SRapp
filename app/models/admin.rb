@@ -7,4 +7,6 @@ class Admin < ActiveRecord::Base
   validates_format_of :subdomain, with: /\A[a-z0-9_]+\Z/, message: "must be lowercase and alphanumerics only"
   validates_length_of :subdomain, maximum: 32, message: "exceeds maximum of 32 characters"
   validates_exclusion_of :subdomain, in: ['www', 'mail', 'ftp'], message: "is not available"  
+
+  has_one :admin_institute, :dependent => :destroy
 end
