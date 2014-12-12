@@ -1,14 +1,43 @@
 <!DOCTYPE html>
-<html>
+<html lang="en"> 
 <head>
+  <meta charset="UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <title>SRapp</title>
   <%= stylesheet_link_tag    'application', media: 'all' %>
   <%= javascript_include_tag 'application' %>
+  <script>
+      $(document).ajaxStart(function() {
+        $('#ajax_loader_big_div').show();
+      });
+
+      $(document).ajaxStop(function() {
+        $('#ajax_loader_big_div').hide();
+      });
+      $(document).ajaxError(function(){
+        $('#ajax_loader_big_div').hide();
+      })
+    </script>
   <%= csrf_meta_tags %>
 </head>
 <body>
+    <%= render :partial => "layouts/header" %>
+    
+    <section>
+      <div class="container">
+        <%= render :partial => "/layouts/notice" %>
+        
+        <div class="panel-body">
+          <div id='ajax_loader_big_div'> 
+            Loading <img alt=""  src="/assets/ajax-loader-big.gif"/>
+          </div>
 
-<%= yield %>
-
-</body>
+          <%= yield%>
+        </div>
+      </div>
+    </section>
+  </body>
 </html>

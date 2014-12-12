@@ -13,3 +13,8 @@
  *= require_tree .
  *= require_self
  */
+
+/* menu button top position fixed */
+.menu-button {
+  margin-top: 10px;
+}

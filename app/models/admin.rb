@@ -3,16 +3,8 @@ class Admin < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
-  RESTRICTED_SUBDOMAINS = %w(www)
-  validates :subdomain, presence: true, 
-                        uniqueness: { case_sensitive: false },
-                        format: { with: /\A[\w\-]+\Z/i, message: 'contains invalid characters' },
-                        exclusion: { in: RESTRICTED_SUBDOMAINS, message: 'restricted' }
-
-  before_validation :downcase_subdomain
-
-  private 
-  def downcase_subdomain
-    self.subdomain = subdomain.try(:downcase)
-  end  
+  validates :subdomain, :presence => true, :uniqueness => true        
+  validates_format_of :subdomain, with: /\A[a-z0-9_]+\Z/, message: "must be lowercase and alphanumerics only"
+  validates_length_of :subdomain, maximum: 32, message: "exceeds maximum of 32 characters"
+  validates_exclusion_of :subdomain, in: ['www', 'mail', 'ftp'], message: "is not available"  
 end
